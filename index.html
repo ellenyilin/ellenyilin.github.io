@@ -1,20 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Ellen Yilin Personal Page</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ellen Yilin - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <div class="hero">
-    <div class="overlay">
-      <h1>Yilin Wang</h1>
-      <img src="images/selfie.jpg" alt="Portrait of Yilin" class="profile-image" />
-      <div class="circle">
-        <span>Curriculum Vitae</span>
-      </div>
-    </div>
-  </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">Ellen Yilin</a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Hi, I'm <span class="highlight">Ellen Yilin</span>
+                    </h1>
+                    <h2 class="hero-subtitle">Holistic Creator & Developer</h2>
+                    <p class="hero-description">
+                        I create beautiful, functional, and user-centered digital experiences that bridge technology and creativity.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">View My Work</a>
+                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="profile-card">
+                        <div class="profile-image">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        I'm a holistic creator passionate about bridging technology and creativity. With experience in 
+                        both technical development and artistic expression, I bring a unique perspective to digital 
+                        solutions that are both functional and beautiful.
+                    </p>
+                    <p>
+                        My journey spans from face recognition technology and machine learning to web development and 
+                        creative design. I believe in creating experiences that not only solve problems but also inspire 
+                        and connect people.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <h3>10+</h3>
+                            <p>Projects Completed</p>
+                        </div>
+                        <div class="stat">
+                            <h3>3+</h3>
+                            <p>Years Learning</p>
+                        </div>
+                        <div class="stat">
+                            <h3>100%</h3>
+                            <p>Creative Passion</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Skills & Technologies</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Programming</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Python</span>
+                        <span class="skill-item">JavaScript</span>
+                        <span class="skill-item">HTML5</span>
+                        <span class="skill-item">CSS3</span>
+                        <span class="skill-item">SQL</span>
+                        <span class="skill-item">R</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Machine Learning</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Computer Vision</span>
+                        <span class="skill-item">Face Recognition</span>
+                        <span class="skill-item">OpenCV</span>
+                        <span class="skill-item">TensorFlow</span>
+                        <span class="skill-item">Pandas</span>
+                        <span class="skill-item">NumPy</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Creative & Tools</h3>
+                    <div class="skill-items">
+                        <span class="skill-item">Adobe Creative Suite</span>
+                        <span class="skill-item">Figma</span>
+                        <span class="skill-item">Git</span>
+                        <span class="skill-item">GitHub</span>
+                        <span class="skill-item">Data Analysis</span>
+                        <span class="skill-item">Visual Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Face Recognition System</h3>
+                        <p>A computer vision project that identifies and tracks characters from classical Chinese literature using face recognition technology and OpenCV.</p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>OpenCV</span>
+                            <span>Face Recognition</span>
+                            <span>Computer Vision</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-small">View Project</a>
+                            <a href="#" class="btn btn-small btn-outline">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Digital Art Collection</h3>
+                        <p>A curated collection of digital artwork exploring themes of nature, technology, and human connection through various digital mediums.</p>
+                        <div class="project-tech">
+                            <span>Adobe Creative Suite</span>
+                            <span>Digital Art</span>
+                            <span>Visual Design</span>
+                            <span>Creative Process</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-small">View Gallery</a>
+                            <a href="#" class="btn btn-small btn-outline">Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="project-content">
+                        <h3>Data Analysis Projects</h3>
+                        <p>Various data analysis projects using Python and R to extract insights from complex datasets and create meaningful visualizations.</p>
+                        <div class="project-tech">
+                            <span>Python</span>
+                            <span>R</span>
+                            <span>Pandas</span>
+                            <span>Data Visualization</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn btn-small">View Analysis</a>
+                            <a href="#" class="btn btn-small btn-outline">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's work together!</h3>
+                    <p>I'm always interested in new opportunities and exciting projects. Whether you have a question or just want to say hi, I'll try my best to get back to you!</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>yilin@example.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-github"></i>
+                            <span>github.com/yilin</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>San Francisco, CA</span>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Ellen Yilin. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
