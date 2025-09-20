@@ -143,20 +143,15 @@ window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 });
 
-// Simple dice animation - just drop and hover flip
+// Simple flip animation with drop effect
 document.addEventListener('DOMContentLoaded', () => {
-    const dice = document.getElementById('dice');
+    const profileContainer = document.querySelector('.profile-image-container');
     
-    if (dice) {
-        // Reset dice animation on page load
-        dice.style.animation = 'none';
-        dice.offsetHeight; // Trigger reflow
-        dice.style.animation = 'simpleDrop 2s ease-out forwards';
-        
-        // Add animation complete class after animation finishes
-        setTimeout(() => {
-            dice.classList.add('animation-complete');
-        }, 2000);
+    if (profileContainer) {
+        // Reset animation on page load
+        profileContainer.style.animation = 'none';
+        profileContainer.offsetHeight; // Trigger reflow
+        profileContainer.style.animation = 'simpleDrop 2s ease-out forwards';
     }
 });
 
