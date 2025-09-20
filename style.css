@@ -239,11 +239,12 @@ body {
     height: 200px;
     transform-style: preserve-3d;
     transition: transform 0.6s;
+    transform: translateY(-100px);
     animation: simpleDrop 2s ease-out forwards;
 }
 
 .profile-card:hover .profile-image-container {
-    transform: rotateY(180deg);
+    transform: translateY(0) rotateY(180deg);
 }
 
 .profile-image {

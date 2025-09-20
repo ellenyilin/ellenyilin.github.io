@@ -152,6 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
         profileContainer.style.animation = 'none';
         profileContainer.offsetHeight; // Trigger reflow
         profileContainer.style.animation = 'simpleDrop 2s ease-out forwards';
+        
+        // After animation completes, ensure proper positioning
+        setTimeout(() => {
+            profileContainer.style.transform = 'translateY(0)';
+        }, 2000);
     }
 });
 
