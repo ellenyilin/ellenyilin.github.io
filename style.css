@@ -238,7 +238,7 @@ body {
     width: 200px;
     height: 200px;
     transform-style: preserve-3d;
-    animation: diceDrop 3s ease-out forwards;
+    animation: simpleDrop 2s ease-out forwards;
 }
 
 .dice {
@@ -246,8 +246,9 @@ body {
     width: 200px;
     height: 200px;
     transform-style: preserve-3d;
-    transform: translateY(-100px) rotateX(0deg) rotateY(0deg);
-    animation: diceRoll 3s ease-out forwards;
+    transform: translateY(-100px) rotateY(0deg);
+    animation: simpleDrop 2s ease-out forwards;
+    transition: transform 0.6s ease;
 }
 
 .dice-face {
@@ -279,54 +280,27 @@ body {
     justify-content: center;
 }
 
-/* Dice face positions */
+/* Dice face positions - only front and back needed */
 .face-1 { transform: rotateY(0deg) translateZ(100px); }
 .face-2 { transform: rotateY(180deg) translateZ(100px); }
-.face-3 { transform: rotateY(90deg) translateZ(100px); }
-.face-4 { transform: rotateY(-90deg) translateZ(100px); }
-.face-5 { transform: rotateX(90deg) translateZ(100px); }
-.face-6 { transform: rotateX(-90deg) translateZ(100px); }
+.face-3 { display: none; }
+.face-4 { display: none; }
+.face-5 { display: none; }
+.face-6 { display: none; }
 
-/* Dice animations */
-@keyframes diceDrop {
+/* Simple drop animation */
+@keyframes simpleDrop {
     0% {
-        transform: translateY(-200px);
+        transform: translateY(-100px) rotateY(0deg);
     }
     100% {
-        transform: translateY(0);
+        transform: translateY(0) rotateY(0deg);
     }
 }
 
-@keyframes diceRoll {
-    0% {
-        transform: translateY(-100px) rotateX(0deg) rotateY(0deg);
-    }
-    20% {
-        transform: translateY(50px) rotateX(720deg) rotateY(360deg);
-    }
-    40% {
-        transform: translateY(-20px) rotateX(1080deg) rotateY(720deg);
-    }
-    60% {
-        transform: translateY(10px) rotateX(1440deg) rotateY(1080deg);
-    }
-    80% {
-        transform: translateY(-5px) rotateX(1800deg) rotateY(1440deg);
-    }
-    100% {
-        transform: translateY(0) rotateX(2160deg) rotateY(1800deg);
-    }
-}
-
-/* Hover effect for dice */
+/* Hover effect - flip to back */
 .profile-card:hover .dice {
-    animation: diceHover 0.6s ease-in-out;
-}
-
-@keyframes diceHover {
-    0% { transform: rotateX(0deg) rotateY(0deg); }
-    50% { transform: rotateX(15deg) rotateY(15deg); }
-    100% { transform: rotateX(0deg) rotateY(0deg); }
+    transform: translateY(0) rotateY(180deg);
 }
 
 /* Section Styles */
