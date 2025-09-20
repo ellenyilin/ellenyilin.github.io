@@ -152,6 +152,11 @@ document.addEventListener('DOMContentLoaded', () => {
         dice.style.animation = 'none';
         dice.offsetHeight; // Trigger reflow
         dice.style.animation = 'simpleDrop 2s ease-out forwards';
+        
+        // Add animation complete class after animation finishes
+        setTimeout(() => {
+            dice.classList.add('animation-complete');
+        }, 2000);
     }
 });
 

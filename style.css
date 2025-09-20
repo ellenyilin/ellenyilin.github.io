@@ -300,7 +300,12 @@ body {
 
 /* Hover effect - flip to back */
 .profile-card:hover .dice {
-    transform: translateY(0) rotateY(180deg);
+    transform: translateY(0) rotateY(180deg) !important;
+}
+
+/* Ensure the dice is in the correct position after animation */
+.dice.animation-complete {
+    transform: translateY(0) rotateY(0deg);
 }
 
 /* Section Styles */
