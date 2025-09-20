@@ -506,6 +506,83 @@ section {
     color: white;
 }
 
+/* Portfolio Showcase Section */
+.portfolio-showcase {
+    background-color: #f8fafc;
+}
+
+.showcase-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.showcase-item {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.showcase-item h3 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #1f2937;
+}
+
+.showcase-item p {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.pdf-viewer {
+    margin-top: 2rem;
+}
+
+.pdf-container {
+    background: #f8fafc;
+    padding: 2rem;
+    border-radius: 15px;
+    border: 2px dashed #d1d5db;
+}
+
+.pdf-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.pdf-icon {
+    font-size: 4rem;
+    color: #059669;
+    margin-bottom: 1rem;
+}
+
+.pdf-preview span {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.pdf-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.pdf-links .btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+}
+
 /* Contact Section */
 .contact-content {
     display: grid;
