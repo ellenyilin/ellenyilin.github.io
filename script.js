@@ -143,6 +143,56 @@ window.addEventListener('load', () => {
     document.body.classList.add('loaded');
 });
 
+// Dice animation and interaction
+document.addEventListener('DOMContentLoaded', () => {
+    const dice = document.getElementById('dice');
+    const profileCard = document.querySelector('.profile-card');
+    
+    if (dice && profileCard) {
+        // Reset dice animation on page load
+        dice.style.animation = 'none';
+        dice.offsetHeight; // Trigger reflow
+        dice.style.animation = 'diceRoll 3s ease-out forwards';
+        
+        // Add click to roll dice
+        profileCard.addEventListener('click', () => {
+            rollDice();
+        });
+        
+        // Add hover effect
+        profileCard.addEventListener('mouseenter', () => {
+            if (!dice.classList.contains('rolling')) {
+                dice.style.animation = 'diceHover 0.6s ease-in-out';
+            }
+        });
+    }
+});
+
+function rollDice() {
+    const dice = document.getElementById('dice');
+    if (!dice) return;
+    
+    // Add rolling class to prevent hover during roll
+    dice.classList.add('rolling');
+    
+    // Generate random rotations
+    const randomX = Math.floor(Math.random() * 6) * 90 + Math.random() * 360;
+    const randomY = Math.floor(Math.random() * 6) * 90 + Math.random() * 360;
+    const randomZ = Math.floor(Math.random() * 6) * 90 + Math.random() * 360;
+    
+    // Apply rolling animation
+    dice.style.animation = 'none';
+    dice.offsetHeight; // Trigger reflow
+    dice.style.transform = `rotateX(${randomX}deg) rotateY(${randomY}deg) rotateZ(${randomZ}deg)`;
+    dice.style.transition = 'transform 2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+    
+    // Remove rolling class after animation
+    setTimeout(() => {
+        dice.classList.remove('rolling');
+        dice.style.transition = '';
+    }, 2000);
+}
+
 // Smooth reveal animation for sections
 function revealOnScroll() {
     const reveals = document.querySelectorAll('.section-title, .about-text, .contact-info');
