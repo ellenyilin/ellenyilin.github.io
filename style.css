@@ -1339,3 +1339,119 @@ body.dark-mode .highlight-box {
         gap: 1rem;
     }
 }
+
+/* ========== Sunglasses Interactive Element ========== */
+.sunglasses {
+    position: absolute;
+    right: -80px;
+    top: 35%;
+    font-size: 3rem;
+    color: rgba(0, 0, 0, 0.8);
+    cursor: grab !important;
+    z-index: 10;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: none;
+}
+
+.sunglasses:hover {
+    transform: scale(1.1) rotate(-5deg);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+}
+
+.sunglasses.dragging {
+    cursor: grabbing !important;
+    transition: none;
+    transform: scale(1.15);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
+    z-index: 10001;
+}
+
+.sunglasses.worn {
+    position: absolute;
+    left: 50%;
+    top: 42%;
+    transform: translate(-50%, -50%) scale(1.2);
+    cursor: pointer !important;
+    font-size: 2.8rem;
+    color: rgba(0, 0, 0, 0.9);
+    animation: gentlePulse 3s ease-in-out infinite;
+}
+
+body.dark-mode .sunglasses {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+body.dark-mode .sunglasses.worn {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+@keyframes gentlePulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.22);
+    }
+}
+
+/* Smooth dark mode transition */
+body,
+.navbar,
+.project-card,
+.skill-category,
+.contact-form,
+.modal-content {
+    transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Snap zone visual hint (subtle) */
+.profile-image-container.snap-ready::after {
+    content: '';
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 140px;
+    height: 50px;
+    border: 2px dashed rgba(5, 150, 105, 0.3);
+    border-radius: 30px;
+    pointer-events: none;
+    animation: snapHint 1s ease-in-out;
+}
+
+@keyframes snapHint {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Profile image container positioning */
+.profile-image-container {
+    position: relative;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .sunglasses {
+        right: -50px;
+        font-size: 2.5rem;
+    }
+    
+    .sunglasses.worn {
+        font-size: 2.3rem;
+    }
+}

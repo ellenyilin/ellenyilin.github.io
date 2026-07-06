@@ -568,3 +568,170 @@ function closeProjectModal() {
     modal.classList.remove('active');
     document.body.style.overflow = '';
 }
+
+// ========== Sunglasses Dark Mode Toggle ==========
+document.addEventListener('DOMContentLoaded', () => {
+    const sunglasses = document.getElementById('sunglasses');
+    const profileContainer = document.querySelector('.profile-image-container');
+    const body = document.body;
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    if (!sunglasses || !profileContainer) return;
+    
+    let isDragging = false;
+    let isWorn = false;
+    let startX, startY;
+    let offsetX = 0, offsetY = 0;
+    
+    // Get face/eye position (relative to profile container)
+    const getEyePosition = () => {
+        const rect = profileContainer.getBoundingClientRect();
+        return {
+            x: rect.width / 2,
+            y: rect.height * 0.42, // Eye position at ~42% from top
+            rect: rect
+        };
+    };
+    
+    // Check if sunglasses are near the face
+    const isNearFace = (x, y) => {
+        const eyePos = getEyePosition();
+        const distance = Math.sqrt(
+            Math.pow(x - eyePos.x, 2) + 
+            Math.pow(y - eyePos.y, 2)
+        );
+        return distance < 80; // Snap zone radius
+    };
+    
+    // Start dragging
+    const startDrag = (e) => {
+        if (isWorn && e.target === sunglasses) {
+            // If worn, single click removes it
+            return;
+        }
+        
+        isDragging = true;
+        sunglasses.classList.add('dragging');
+        
+        const touch = e.touches ? e.touches[0] : e;
+        const rect = sunglasses.getBoundingClientRect();
+        const containerRect = profileContainer.getBoundingClientRect();
+        
+        startX = touch.clientX - rect.left;
+        startY = touch.clientY - rect.top;
+        
+        e.preventDefault();
+    };
+    
+    // During drag
+    const onDrag = (e) => {
+        if (!isDragging) return;
+        
+        const touch = e.touches ? e.touches[0] : e;
+        const containerRect = profileContainer.getBoundingClientRect();
+        
+        // Calculate position relative to container
+        offsetX = touch.clientX - containerRect.left - startX;
+        offsetY = touch.clientY - containerRect.top - startY;
+        
+        sunglasses.style.left = offsetX + 'px';
+        sunglasses.style.top = offsetY + 'px';
+        sunglasses.style.right = 'auto';
+        
+        // Check if near face for snap hint
+        if (isNearFace(offsetX, offsetY)) {
+            profileContainer.classList.add('snap-ready');
+        } else {
+            profileContainer.classList.remove('snap-ready');
+        }
+        
+        e.preventDefault();
+    };
+    
+    // End drag
+    const endDrag = (e) => {
+        if (!isDragging) return;
+        
+        isDragging = false;
+        sunglasses.classList.remove('dragging');
+        profileContainer.classList.remove('snap-ready');
+        
+        // Check if should snap to face
+        if (isNearFace(offsetX, offsetY)) {
+            // Snap to face and activate dark mode
+            sunglasses.classList.add('worn');
+            isWorn = true;
+            
+            // Smooth transition to dark mode
+            setTimeout(() => {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            }, 200);
+            
+        } else {
+            // Return to original position if not near face
+            sunglasses.style.left = '';
+            sunglasses.style.top = '';
+            sunglasses.style.right = '-80px';
+        }
+    };
+    
+    // Click on worn sunglasses to remove
+    const toggleSunglasses = (e) => {
+        if (!isWorn) return;
+        
+        // Remove sunglasses
+        sunglasses.classList.remove('worn');
+        isWorn = false;
+        
+        // Return to original position
+        sunglasses.style.left = '';
+        sunglasses.style.top = '';
+        sunglasses.style.right = '-80px';
+        
+        // Switch back to light mode
+        setTimeout(() => {
+            body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+        }, 200);
+    };
+    
+    // Mouse events
+    sunglasses.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', onDrag);
+    document.addEventListener('mouseup', endDrag);
+    
+    // Touch events (mobile)
+    sunglasses.addEventListener('touchstart', startDrag, { passive: false });
+    document.addEventListener('touchmove', onDrag, { passive: false });
+    document.addEventListener('touchend', endDrag);
+    
+    // Click to remove when worn
+    sunglasses.addEventListener('click', toggleSunglasses);
+    
+    // Sync with existing theme toggle button
+    if (themeToggle) {
+        const originalToggle = themeToggle.onclick;
+        themeToggle.onclick = (e) => {
+            // If sunglasses are worn, remove them when toggling
+            if (isWorn) {
+                sunglasses.classList.remove('worn');
+                isWorn = false;
+                sunglasses.style.left = '';
+                sunglasses.style.top = '';
+                sunglasses.style.right = '-80px';
+            }
+            
+            // Call original toggle
+            body.classList.toggle('dark-mode');
+            const theme = body.classList.contains('dark-mode') ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+            
+            // Add animation effect
+            themeToggle.style.transform = 'scale(0.9) rotate(180deg)';
+            setTimeout(() => {
+                themeToggle.style.transform = '';
+            }, 300);
+        };
+    }
+});
