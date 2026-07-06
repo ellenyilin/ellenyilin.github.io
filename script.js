@@ -709,11 +709,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Click to remove when worn
     sunglasses.addEventListener('click', toggleSunglasses);
     
-    // Sync with existing theme toggle button
-    if (themeToggle) {
-        const originalToggle = themeToggle.onclick;
-        themeToggle.onclick = (e) => {
-            // If sunglasses are worn, remove them when toggling
+    // DON'T override theme toggle - it already works correctly
+    // Just sync sunglasses state when theme button is clicked
+    const existingThemeToggle = document.getElementById('theme-toggle');
+    if (existingThemeToggle) {
+        existingThemeToggle.addEventListener('click', () => {
+            // If sunglasses are worn when theme is toggled via button, remove them
             if (isWorn) {
                 sunglasses.classList.remove('worn');
                 isWorn = false;
@@ -721,17 +722,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 sunglasses.style.top = '';
                 sunglasses.style.right = '-80px';
             }
-            
-            // Call original toggle
-            body.classList.toggle('dark-mode');
-            const theme = body.classList.contains('dark-mode') ? 'dark' : 'light';
-            localStorage.setItem('theme', theme);
-            
-            // Add animation effect
-            themeToggle.style.transform = 'scale(0.9) rotate(180deg)';
-            setTimeout(() => {
-                themeToggle.style.transform = '';
-            }, 300);
-        };
+        });
     }
 });
