@@ -203,3 +203,135 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// ========== Loading Screen ==========
+window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loading-screen');
+    setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+    }, 1500);
+});
+
+// ========== Dark Mode Toggle ==========
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    // Check for saved theme preference or default to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+        body.classList.add('dark-mode');
+    }
+    
+    // Theme toggle handler
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const theme = body.classList.contains('dark-mode') ? 'dark' : 'light';
+        localStorage.setItem('theme', theme);
+        
+        // Add animation effect
+        themeToggle.style.transform = 'scale(0.9) rotate(180deg)';
+        setTimeout(() => {
+            themeToggle.style.transform = '';
+        }, 300);
+    });
+});
+
+// ========== Ripple Cursor Effect ==========
+document.addEventListener('DOMContentLoaded', () => {
+    const rippleContainer = document.getElementById('ripple-container');
+    
+    // Create custom cursor element
+    const cursor = document.createElement('div');
+    cursor.className = 'custom-cursor';
+    document.body.appendChild(cursor);
+    
+    let mouseX = 0;
+    let mouseY = 0;
+    let cursorX = 0;
+    let cursorY = 0;
+    
+    // Track mouse position
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    
+    // Smooth cursor follow
+    function animateCursor() {
+        const speed = 0.15;
+        cursorX += (mouseX - cursorX) * speed;
+        cursorY += (mouseY - cursorY) * speed;
+        
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+    
+    // Create ripple effect on click
+    document.addEventListener('click', (e) => {
+        createRipple(e.clientX, e.clientY);
+    });
+    
+    // Create ripple on scroll (throttled)
+    let scrollTimeout;
+    let lastScrollY = window.scrollY;
+    
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            if (Math.abs(window.scrollY - lastScrollY) > 50) {
+                const x = window.innerWidth / 2;
+                const y = window.scrollY + window.innerHeight / 2;
+                createRipple(x, y, true);
+                lastScrollY = window.scrollY;
+            }
+        }, 100);
+    });
+    
+    // Cursor hover effect on interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, .btn, input, textarea, select');
+    
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('active');
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('active');
+        });
+    });
+    
+    // Create ripple function
+    function createRipple(x, y, isScroll = false) {
+        const ripple = document.createElement('div');
+        ripple.className = 'ripple';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        
+        // Different style for scroll ripples
+        if (isScroll) {
+            ripple.style.borderColor = document.body.classList.contains('dark-mode') 
+                ? 'rgba(14, 165, 233, 0.3)' 
+                : 'rgba(5, 150, 105, 0.3)';
+        }
+        
+        rippleContainer.appendChild(ripple);
+        
+        // Remove ripple after animation
+        setTimeout(() => {
+            ripple.remove();
+        }, 1000);
+    }
+    
+    // Hide custom cursor when mouse leaves window
+    document.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+    });
+    
+    document.addEventListener('mouseenter', () => {
+        cursor.style.opacity = '1';
+    });
+});
