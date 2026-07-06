@@ -335,3 +335,236 @@ document.addEventListener('DOMContentLoaded', () => {
         cursor.style.opacity = '1';
     });
 });
+
+// ========== Project Modal System ==========
+const projectData = {
+    lyft: {
+        title: "Lyft Traffic Analysis",
+        badge: "01 · INSIGHT",
+        role: "Problem Identification",
+        context: "My role in this project focused on recognizing where the transport system was underperforming and making those problems visible. By applying my analytical background, I identified recurring patterns in Lyft's market performance across New York City.",
+        challenge: "When total demand surges, Lyft consistently loses share to Uber, indicating that Lyft's driver supply is insufficient during peak hours. Between 15:00–18:00, total trip volume reaches its highest levels, and Lyft's market share falls to its lowest point (~23%).",
+        approach: [
+            "Analyzed market performance across all NYC boroughs (Manhattan, Bronx, Brooklyn, Queens, Staten Island)",
+            "Applied spatial-temporal analysis to identify demand-supply misalignment patterns",
+            "Distinguished structurally different demand–supply patterns through analytical methods",
+            "Special case discovery: Staten Island shows opposite pattern - Lyft gains share when demand increases"
+        ],
+        outcome: "The analysis revealed a clear contrast between temporal and spatial performance. While vehicle allocation is generally effective over time, spatial analysis shows that demand in Manhattan consistently outpaces available supply. This reframing defined the problem space and set the stage for exploring how such mismatches could be addressed through design and strategic solutions."
+    },
+    vr: {
+        title: "Healthy HCI: VR Ergonomics Study",
+        badge: "02 · EXPERIMENT",
+        role: "Solution Exploration Through Controlled Experiments",
+        context: "VR interaction hasn't been widely adopted partly because repeated use is physically and mentally exhausting. This study investigates comfort-oriented interaction paths and spatial regions to reduce workload and potential health risks.",
+        challenge: "When a system-level issue is identified, I explore possible interventions through controlled experiments to quantify workload and fatigue in VR target selection tasks and translate findings into actionable UI placement guidelines.",
+        approach: [
+            "Designed experimental protocol with 12 participants (~3 hours each, 36 total study hours)",
+            "Independent variables: Distance (0.45m / 0.60m / 0.75m), Region (multiple angle regions: -60° to +60°)",
+            "Dependent variables: NASA-TLX, Borg CR10 rating, Subjective comfort notes",
+            "Statistical analysis (ANOVA) to identify comfort patterns"
+        ],
+        insights: [
+            "<strong>Insight 1 - Keep targets within FOV:</strong> Turning head was most uncomfortable; targets out of view add mental pressure",
+            "<strong>Insight 2 - Prefer lower and slightly right regions:</strong> Lower-central regions show consistently lower exertion",
+            "<strong>Insight 3 - Vary interaction regions:</strong> Region alternation reduces fatigue accumulation by spreading physical demand"
+        ],
+        outcome: "Distance had significant effect on perceived workload (ANOVA, p < .001). Region placement significantly affected mental/physical demand (p < .01). The outcome is a set of design-ready guidelines for VR UI placement that reduce fatigue and support inclusive VR experiences."
+    },
+    berkeley: {
+        title: "Berkeley Rock & Roar: Spatial Design",
+        badge: "03 · DESIGN",
+        role: "Design Solutions",
+        context: "Located in Cesar Chavez Park, Berkeley, this project explores how spatial design can mediate recurring human–wildlife interaction along the waterfront. Seasonal seal presence introduces a recurring human–wildlife conflict at the site.",
+        challenge: "The design responds by subtly regulating proximity through spatial organization, discouraging close encounters while maintaining openness and coexistence.",
+        approach: [
+            "Translated abstract system insights into concrete spatial decisions under real-world constraints",
+            "Field observations abstracted into spatial rules guiding circulation, openness, and program distribution",
+            "Organized site into two spatially integrated but behaviorally differentiated zones",
+            "Employed modular stone and wood elements that subtly regulate movement and distance"
+        ],
+        designElements: [
+            "<strong>Spatial Experience:</strong> Human circulation system + Wildlife habitat system working in harmony",
+            "<strong>Mediated Visual Access:</strong> Controlled sightlines maintaining awareness without intrusion",
+            "<strong>Adaptive System:</strong> Modular elements can be reconfigured based on environmental conditions",
+            "<strong>Vertical Relationship:</strong> Sectional strategy for behavioral mediation"
+        ],
+        outcome: "These elements function as an adaptive system, capable of being reconfigured in response to environmental conditions while maintaining openness and coexistence between human visitors and wildlife."
+    },
+    cartabio: {
+        title: "CartaBio Immune Database",
+        badge: "04 · BUILD",
+        role: "Implementation & System Improvement",
+        context: "As projects move from concept to execution, design intentions often break down without supporting systems. This project focuses on building data infrastructure to support consistent data ingestion, validation, and reuse.",
+        challenge: "Fragmented public scRNA-seq sources distributed across dozens of platforms with inconsistent formats. Inconsistent annotation standards where cell types and states defined differently across datasets. Lack of reusable abstractions requiring repeated manual interpretation for downstream analysis.",
+        approach: [
+            "Designed systematic data pipeline transforming fragmented sources into structured, queryable database",
+            "Integrated data pipeline with quality control (deduplication, metadata standardization)",
+            "Implemented RAPIDS (CuDF) CUDA acceleration for batch processing",
+            "Built cell type annotation process with cloud computing architecture",
+            "Established consistent data ingestion, validation, and reuse systems"
+        ],
+        metrics: [
+            "<strong>600K+ datasets processed:</strong> Comprehensive coverage of immune cell data",
+            "<strong>80% → 94% data integrity:</strong> Significant quality improvement through validation pipeline",
+            "<strong>3 weeks → 3 days:</strong> 7x speedup in processing 40K+ datasets using CUDA optimization",
+            "<strong>AWS S3 deployment:</strong> Built structured database with 300M+ records"
+        ],
+        outcome: "Successfully transformed fragmented research data into a reusable system. The systematic pipeline now enables consistent downstream analysis without repeated manual interpretation, significantly accelerating research workflows."
+    },
+    sensetime: {
+        title: "SenseTime AI Chatbox A/B Testing",
+        badge: "05 · VALIDATE",
+        role: "Evaluation for Business Goals",
+        context: "During my internship at SenseTime, I proposed and validated a new interaction pattern in a conversational AI shopping flow to reduce early exits and increase first-step retention.",
+        challenge: "In an AI-driven recommendation dialogue, product images were auto-popped early in the conversation. While informative, this design often disrupted exploration and led to immediate drop-off.",
+        hypothesis: "Delaying product exposure through progressive disclosure will increase the rate of users who make an initial click/interaction rather than exiting immediately. It would give users sense of exploration.",
+        solution: "Instead of showing product images automatically, product cards are revealed only after the user takes an additional interaction step, encouraging exploration and giving users a stronger sense of control.",
+        results: [
+            "<strong>Primary metric improved:</strong> First-step retention ↑17%",
+            "<strong>Improved exploration behavior:</strong> Users engaged longer before seeing product content",
+            "<strong>Early funnel strengthened:</strong> Reduced 'bounce at first message' behavior"
+        ],
+        outcome: "The A/B test validated the progressive disclosure hypothesis. By giving users more agency in the exploration process, we successfully reduced early drop-off and improved retention in the critical first interaction step."
+    }
+};
+
+function openProjectModal(projectId) {
+    const modal = document.getElementById('project-modal');
+    const modalBody = document.getElementById('modal-body');
+    const project = projectData[projectId];
+    
+    if (!project) return;
+    
+    let content = `
+        <div class="modal-header">
+            <div class="project-badge">${project.badge}</div>
+            <h2>${project.title}</h2>
+            <p style="font-size: 1.1rem; opacity: 0.8; margin-top: 0.5rem;"><strong>My Role:</strong> ${project.role}</p>
+        </div>
+    `;
+    
+    // Context
+    if (project.context) {
+        content += `
+            <div class="modal-section">
+                <h3><i class="fas fa-info-circle"></i> Context</h3>
+                <p>${project.context}</p>
+            </div>
+        `;
+    }
+    
+    // Challenge
+    if (project.challenge) {
+        content += `
+            <div class="modal-section">
+                <h3><i class="fas fa-exclamation-triangle"></i> Challenge</h3>
+                <div class="highlight-box">
+                    <p>${project.challenge}</p>
+                </div>
+            </div>
+        `;
+    }
+    
+    // Hypothesis (for SenseTime)
+    if (project.hypothesis) {
+        content += `
+            <div class="modal-section">
+                <h3><i class="fas fa-lightbulb"></i> Hypothesis</h3>
+                <p>${project.hypothesis}</p>
+            </div>
+        `;
+    }
+    
+    // Solution (for SenseTime)
+    if (project.solution) {
+        content += `
+            <div class="modal-section">
+                <h3><i class="fas fa-tools"></i> Proposed Solution</h3>
+                <p>${project.solution}</p>
+            </div>
+        `;
+    }
+    
+    // Approach
+    if (project.approach) {
+        content += `
+            <div class="modal-section">
+                <h3><i class="fas fa-tasks"></i> Approach</h3>
+                <ul>
+                    ${project.approach.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+    
+    // Insights (for VR)
+    if (project.insights) {
+        content += `
+            <div class="modal-section">
+                <h3><i class="fas fa-brain"></i> Key Insights</h3>
+                <ul>
+                    ${project.insights.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+    
+    // Design Elements (for Berkeley)
+    if (project.designElements) {
+        content += `
+            <div class="modal-section">
+                <h3><i class="fas fa-drafting-compass"></i> Design Elements</h3>
+                <ul>
+                    ${project.designElements.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+    
+    // Metrics (for CartaBio)
+    if (project.metrics) {
+        content += `
+            <div class="modal-section">
+                <h3><i class="fas fa-chart-bar"></i> Key Metrics</h3>
+                <ul>
+                    ${project.metrics.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+    
+    // Results (for SenseTime)
+    if (project.results) {
+        content += `
+            <div class="modal-section">
+                <h3><i class="fas fa-trophy"></i> Key Results from A/B Testing</h3>
+                <ul>
+                    ${project.results.map(item => `<li>${item}</li>`).join('')}
+                </ul>
+            </div>
+        `;
+    }
+    
+    // Outcome
+    if (project.outcome) {
+        content += `
+            <div class="modal-section">
+                <h3><i class="fas fa-check-circle"></i> Outcome</h3>
+                <div class="highlight-box">
+                    <p>${project.outcome}</p>
+                </div>
+            </div>
+        `;
+    }
+    
+    modalBody.innerHTML = content;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeProjectModal() {
+    const modal = document.getElementById('project-modal');
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+}
